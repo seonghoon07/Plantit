@@ -20,7 +20,7 @@ const Profile = () => {
           </div>
         </div>
         <div className={s.coinContainer}>
-          <p className={s.myCoinText}>내 코인 <span className={s.coin}>64개</span></p>
+          <p className={s.myCoinText}>내 코인 <span className={s.coin}>0개</span></p>
           <p className={s.chargeText}>충전하기</p>
         </div>
         <div className={s.resultWrapper}>

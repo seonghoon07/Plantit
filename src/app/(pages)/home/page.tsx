@@ -11,7 +11,7 @@ const Home = () => {
         <div className={s.headerWrapper}>
           <div className={s.coinWrapper}>
             <Coin />
-            <p className={s.coinText}>62</p>
+            <p className={s.coinText}>0</p>
           </div>
           <MarketIcon />
         </div>

@@ -1,5 +1,14 @@
 import { customAxios } from "../customAxios";
 
+const getUserData = async () => {
+  try {
+    const res = await customAxios.get("/user")
+    return res.data.data
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const authorizeAccess = async (code: String) => {
   try {
     const response = await customAxios.post(
@@ -21,6 +30,11 @@ export const authorizeAccess = async (code: String) => {
     }
 
     if (localStorage.getItem("accessToken") && localStorage.getItem("refreshToken")) {
+      const { email, level, name, percent} = await getUserData()
+      localStorage.setItem("email", email);
+      localStorage.setItem("level", level);
+      localStorage.setItem("name", name);
+      localStorage.setItem("percent", percent);
       window.location.replace("/home");
     }
 
