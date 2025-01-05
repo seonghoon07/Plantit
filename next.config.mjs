@@ -5,6 +5,7 @@ const withVanillaExtract = createVanillaExtractPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   assetPrefix: '.',
+  reactStrictMode: false,
 };
 
 export default withVanillaExtract(nextConfig);

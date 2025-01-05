@@ -2,14 +2,15 @@ import { customAxios } from "../customAxios";
 
 const getUserData = async () => {
   try {
-    const res = await customAxios.get("/user")
-    return res.data.data
+    const res = await customAxios.get("/user");
+    return res.data.data;
   } catch (err) {
-    console.log(err)
+    console.log(err);
+    throw err;
   }
-}
+};
 
-export const authorizeAccess = async (code: String) => {
+export const authorizeAccess = async (code: string) => {
   try {
     const response = await customAxios.post(
       `/auth/google?code=${code}`,
@@ -20,7 +21,7 @@ export const authorizeAccess = async (code: String) => {
       },
     );
 
-    console.log(response)
+    console.log(response);
 
     const { accessToken: newAccessToken, refreshToken } = response.data.data;
 
@@ -30,16 +31,22 @@ export const authorizeAccess = async (code: String) => {
     }
 
     if (localStorage.getItem("accessToken") && localStorage.getItem("refreshToken")) {
-      const { email, level, name, percent} = await getUserData()
+      const { email, level, name, percent } = await getUserData();
+
       localStorage.setItem("email", email);
       localStorage.setItem("level", level);
       localStorage.setItem("name", name);
       localStorage.setItem("percent", percent);
+
+      const user = { email, level, name, percent };
+      localStorage.setItem("user", JSON.stringify(user));
+
       window.location.replace("/home");
     }
 
     return true;
   } catch (error) {
+    console.error("Authorization Error:", error);
     return error;
   }
 };

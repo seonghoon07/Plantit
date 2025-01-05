@@ -1,4 +1,4 @@
-import {style} from "@vanilla-extract/css"
+import {style} from "@vanilla-extract/css";
 import theme from "@/styles/theme.css";
 import {flex} from "@/styles/flex.css";
 

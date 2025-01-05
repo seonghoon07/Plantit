@@ -8,7 +8,6 @@ export const useAuthService = () => {
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get("code");
     const error = searchParams.get("error");
-    console.log(code)
 
     if (code) {
       (async () => {

@@ -1,8 +1,13 @@
+"use client"
+
 import * as s from "./style.css"
 import SettingIcon from "@/assets/settingIcon";
 import PlantInfo from "@/components/PlantInfo/page";
+import {useAtom} from "jotai";
+import {userAtom} from "@/utils/atom/userAtom";
 
 const Profile = () => {
+  const [user] = useAtom(userAtom);
   return (
     <div className={s.container}>
       <div className={s.contentWrapper}>
@@ -13,8 +18,8 @@ const Profile = () => {
           </div>
           <div className={s.userInfoContainer}>
             <div className={s.userInfoWrapper}>
-              <p className={s.userName}>최성훈</p>
-              <p className={s.userLevel}>LV.2 새싹 - 23%</p>
+              <p className={s.userName}>{user?.name}</p>
+              <p className={s.userLevel}>LV.{user?.level} 새싹 - {user?.percent}%</p>
             </div>
             <button className={s.userInfoFixBtn}>프로필 수정</button>
           </div>

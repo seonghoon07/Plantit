@@ -1,7 +1,8 @@
+"use client"
+
 import * as s from "./style.css"
 import Coin from "@/assets/coin";
 import MarketIcon from "@/assets/marketIcon";
-import SproutImg from "@/assets/sproutImg";
 import PlantInfo from "@/components/PlantInfo/page";
 
 const Home = () => {
