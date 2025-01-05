@@ -1,16 +1,15 @@
-import type { Metadata } from "next";
+"use client"
+
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Plantit",
-  description: "눈으로 보는 일기장",
-};
+import {useAuthService} from "@/utils/auth/useAuthService";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useAuthService();
   return (
     <html lang="en">
       <body>

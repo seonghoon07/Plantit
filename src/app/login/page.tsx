@@ -1,9 +1,22 @@
+"use client"
+
 import * as s from "./style.css"
 import Logo from "@/assets/Logo"
 import Trees from "@/assets/Trees"
 import Google from "@/assets/Google"
+import {customAxios} from "@/utils/customAxios";
 
 const Login = () => {
+  const handleGoogleLoginClick = async () => {
+    try {
+      const { data } = await customAxios.get("/auth/google/link")
+      if (data) {
+        window.location.href = data.data;
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
   return (
     <div className={s.background}>
       <div className={s.contentWrapper}>
@@ -24,7 +37,7 @@ const Login = () => {
               <p className={s.easyLoginText}>간편 로그인</p>
             <div className={s.devideLine} />
           </div>
-          <div className={s.googleLoginLayout}>
+          <div className={s.googleLoginLayout} onClick={handleGoogleLoginClick}>
             <Google />
             <div className={s.googleLoginTextLayout}>
               <p className={s.googleLoginText}>구글 로그인</p>

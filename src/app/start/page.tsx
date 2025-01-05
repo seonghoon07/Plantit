@@ -3,12 +3,13 @@
 import * as s from "./style.css"
 import Logo from "@/assets/Logo"
 import {useEffect} from "react";
-import {redirect} from "next/navigation";
+import {useRouter} from "next/navigation";
 
 const StartPage = () => {
+  const router = useRouter();
   useEffect(() => {
     setTimeout(() => {
-      redirect("/login");
+      router.push("/login");
     }, 1000)
   }, []);
 
