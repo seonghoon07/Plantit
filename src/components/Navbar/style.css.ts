@@ -8,7 +8,7 @@ export const container = style({
   height: '72px',
   padding: '0px 8px',
   gap: '12px',
-  backgroundColor: theme.gray["600"],
+  backgroundColor: theme.gray["500"],
   position: "fixed",
   bottom: 0,
   left: 0,
