@@ -5,9 +5,33 @@ import SettingIcon from "@/assets/settingIcon";
 import PlantInfo from "@/components/PlantInfo/page";
 import {useAtom} from "jotai";
 import {userAtom} from "@/utils/atom/userAtom";
+import { useEffect, useState } from "react";
+import { customAxios } from "@/utils/customAxios";
+
+interface Diary {
+  id: number;
+  title: string;
+  createdAt: string;
+}
 
 const Profile = () => {
-  const [user] = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
+  const [diaryList, setDiaryList] = useState<Diary[]>([]);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, [setUser]);
+  useEffect(() => {
+    (async () => {
+      const { data } = await customAxios.get("/diary");
+      setDiaryList(data.dataList);
+    })();
+  }, []);
+
+
   return (
     <div className={s.container}>
       <div className={s.contentWrapper}>
@@ -31,7 +55,7 @@ const Profile = () => {
         <div className={s.resultWrapper}>
           <div className={s.diaryCountWrapper}>
             <p className={s.diaryCountTitle}>적은 일기 수</p>
-            <p className={s.diaryCount}>1</p>
+            <p className={s.diaryCount}>{diaryList.length}</p>
           </div>
           <div className={s.resultDeviceLine}/>
           <div className={s.diaryCountWrapper}>

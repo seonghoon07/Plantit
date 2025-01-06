@@ -62,7 +62,7 @@ export const diaryContainer = style({
 })
 
 export const diaryTitle = style({
-  width: "100%",
+  width: "90%",
   color: theme.white,
   fontFamily: "Pretendard",
   fontSize: "14px",
@@ -71,6 +71,7 @@ export const diaryTitle = style({
 })
 
 export const diaryDate = style({
+  width: "35%",
   color: theme.gray["100"],
   textAlign: "right",
   fontFamily: "Pretendard",

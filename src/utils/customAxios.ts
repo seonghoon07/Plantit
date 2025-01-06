@@ -16,9 +16,16 @@ customAxios.interceptors.request.use((data) => {
 export const postRefreshToken = async () => {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
   const refreshToken = localStorage.getItem("refreshToken");
-  const response = await axios.post(`${BASE_URL}/auth/refresh`, {
-    refreshToken,
-  });
+
+  const response = await axios.post(
+    `${BASE_URL}/auth/refresh`,
+    {},
+    {
+      headers: {
+        Authorization: `${refreshToken}`,
+      },
+    }
+  );
   return response;
 };
 
@@ -32,8 +39,8 @@ customAxios.interceptors.response.use(
       const originRequest = config;
       try {
         const response = await postRefreshToken();
-        if (response.status === 201) {
-          const newAccessToken = response.data.accessToken;
+        if (response.status === 200) {
+          const newAccessToken = response.data.data.accessToken;
           localStorage.setItem("accessToken", newAccessToken);
           axios.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
           if (originRequest && originRequest.headers) {

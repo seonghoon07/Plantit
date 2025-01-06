@@ -33,11 +33,6 @@ export const authorizeAccess = async (code: string) => {
     if (localStorage.getItem("accessToken") && localStorage.getItem("refreshToken")) {
       const { email, level, name, percent } = await getUserData();
 
-      localStorage.setItem("email", email);
-      localStorage.setItem("level", level);
-      localStorage.setItem("name", name);
-      localStorage.setItem("percent", percent);
-
       const user = { email, level, name, percent };
       localStorage.setItem("user", JSON.stringify(user));
 
