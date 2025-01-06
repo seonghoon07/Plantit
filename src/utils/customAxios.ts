@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
+import { router } from "next/client";
 
 export const customAxios: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -57,6 +58,7 @@ customAxios.interceptors.response.use(
           alert(
             "로그인 시간이 만료되었습니다. 다시 로그인해주세요.",
           );
+          window.location.replace("/login");
         }
       }
     }

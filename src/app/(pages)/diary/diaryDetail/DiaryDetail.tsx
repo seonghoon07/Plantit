@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as s from "@/app/(pages)/diary/style.css";
 import LeftArrowIcon from "@/assets/leftArrowIcon";
 import { customAxios } from "@/utils/customAxios";
@@ -13,23 +13,31 @@ interface DiaryData {
   updatedAt: string;
 }
 
-interface DiaryWriteProps {
+interface DiaryDetailProps {
   diary: DiaryData;
   setIsDiaryRead: (value: boolean) => void;
 }
 
-const DiaryDetail = ({ diary, setIsDiaryRead }: DiaryWriteProps) => {
+const DiaryDetail = ({ diary, setIsDiaryRead }: DiaryDetailProps) => {
   const [getDiary, setGetDiary] = useState<DiaryData>(diary);
+  const [isModified, setIsModified] = useState(false);
+
+  useEffect(() => {
+    const modified =
+      diary.title !== getDiary.title || diary.content !== getDiary.content;
+    setIsModified(modified);
+  }, [diary, getDiary]);
 
   const onDiarySubmit = async () => {
+    if (!isModified) return;
+
     try {
-      // 수정 요청 코드 추가
-      // await customAxios.put(`/diary/${getDiary.id}`, {
-      //   title: getDiary.title,
-      //   content: getDiary.content,
-      // });
-      // alert("일기가 수정되었습니다!");
-      // setIsDiaryRead(false);
+      const { data } = await customAxios.put(`/diary/${getDiary.id}`, {
+        title: getDiary.title,
+        content: getDiary.content,
+      });
+      alert("일기가 수정되었습니다!");
+      setIsDiaryRead(false);
     } catch (err) {
       alert("일기가 수정되지 않았습니다.");
     }
@@ -44,9 +52,7 @@ const DiaryDetail = ({ diary, setIsDiaryRead }: DiaryWriteProps) => {
         <input
           className={s.writeTitle}
           value={getDiary.title}
-          onChange={(e) =>
-            setGetDiary({ ...getDiary, title: e.target.value })
-          }
+          onChange={(e) => setGetDiary({ ...getDiary, title: e.target.value })}
         />
         <div className={s.writeDevideLine} />
         <textarea
@@ -57,7 +63,13 @@ const DiaryDetail = ({ diary, setIsDiaryRead }: DiaryWriteProps) => {
           }
         />
       </div>
-      <button className={s.writeFinishBtn} onClick={onDiarySubmit}>
+      <button
+        className={`${
+          isModified ? s.writeFinishBtn : s.modifyDisableBtn
+        }`}
+        onClick={onDiarySubmit}
+        disabled={!isModified}
+      >
         수정하기
       </button>
     </div>

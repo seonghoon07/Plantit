@@ -8,9 +8,16 @@ import {useRouter} from "next/navigation";
 const StartPage = () => {
   const router = useRouter();
   useEffect(() => {
-    setTimeout(() => {
-      router.push("/login");
-    }, 1000)
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      setTimeout(() => {
+        router.push("/home");
+      }, 1000)
+    } else {
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000)
+    }
   }, []);
 
   return (

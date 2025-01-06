@@ -19,7 +19,7 @@ export const plantUnderline = style({
 
 export const growthWrapper = style({
   ...flex.COLUMN_CENTER,
-  gap: "4px",
+  gap: "8px",
 })
 
 export const progressBar = style({
@@ -36,4 +36,9 @@ export const levelText = style({
   fontSize: "12px",
   fontWeight: "400",
   lineHeight: "110%",
+})
+
+export const progress = style({
+  height: "100%",
+  backgroundColor: theme.green[100],
 })

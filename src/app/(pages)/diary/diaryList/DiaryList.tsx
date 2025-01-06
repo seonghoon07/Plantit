@@ -25,37 +25,37 @@ const DiaryList = ({ setIsDiaryWrite }: DiaryWriteProps) => {
   const [writeBtnState, setWriteBtnState] = useState<boolean>(true);
   const [selectedDiary, setSelectedDiary] = useState<DiaryData | null>(null);
   const [isDiaryRead, setIsDiaryRead] = useState<boolean>(false);
-  const [hasTodayDiary, setHasTodayDiary] = useState<boolean | null>(null); // 오늘 일기 여부 저장
+  const [hasTodayDiary, setHasTodayDiary] = useState<boolean | null>(null);
+
+  const fetchDiaries = async () => {
+    try {
+      const { data } = await customAxios.get("/diary");
+      setDiaryList(data.dataList);
+
+      const todayDiary = data.dataList.find((diary: DiaryData) => {
+        const date = diary.createdAt.split("T")[0];
+        return date === today;
+      });
+
+      setHasTodayDiary(!!todayDiary);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
-    const fetchDiaries = async () => {
-      try {
-        const { data } = await customAxios.get("/diary");
-        setDiaryList(data.dataList);
+    fetchDiaries();
+  }, [isDiaryRead, writeBtnState]);
 
-        // 오늘 작성된 일기가 있는지 확인
-        const todayDiary = data.dataList.find((diary: DiaryData) => {
-          const date = diary.createdAt.split("T")[0];
-          return date === today;
-        });
-
-        // 오늘 작성된 일기가 있으면 상태를 업데이트
-        setHasTodayDiary(!!todayDiary);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
+  useEffect(() => {
     fetchDiaries();
 
-    // 자동으로 작성 버튼을 리셋하는 interval 설정 (밤 12시)
     const interval = setInterval(() => {
       const currentTime = new Date();
       const hours = currentTime.getHours();
       const minutes = currentTime.getMinutes();
 
       if (hours === 0 && minutes === 0) {
-        // 밤 12시가 지나면 다시 확인하고 상태 업데이트
         fetchDiaries();
       }
     }, 60000); // 1분마다 체크
@@ -65,7 +65,7 @@ const DiaryList = ({ setIsDiaryWrite }: DiaryWriteProps) => {
 
   useEffect(() => {
     if (hasTodayDiary !== null) {
-      setWriteBtnState(!hasTodayDiary); // hasTodayDiary 값에 따라 작성 버튼 상태 업데이트
+      setWriteBtnState(!hasTodayDiary);
     }
   }, [hasTodayDiary]);
 
@@ -82,7 +82,10 @@ const DiaryList = ({ setIsDiaryWrite }: DiaryWriteProps) => {
   return (
     <>
       {isDiaryRead && selectedDiary ? (
-        <DiaryDetail diary={selectedDiary} setIsDiaryRead={setIsDiaryRead} />
+        <DiaryDetail
+          diary={selectedDiary}
+          setIsDiaryRead={setIsDiaryRead}
+        />
       ) : (
         <>
           <div className={s.diaryListWrapper}>

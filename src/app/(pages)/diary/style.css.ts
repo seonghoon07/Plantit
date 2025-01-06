@@ -166,3 +166,17 @@ export const writeFinishBtn = style({
   fontWeight: "600",
   lineHeight: "110%",
 })
+
+export const modifyDisableBtn = style({
+  width: "100%",
+  padding: "12px 16px",
+  ...flex.CENTER,
+  borderRadius: "8px",
+  backgroundColor: theme.gray["300"],
+  color: theme.black,
+  border: "none",
+  fontFamily: "Pretendard",
+  fontSize: "16px",
+  fontWeight: "600",
+  lineHeight: "110%",
+})

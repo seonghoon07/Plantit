@@ -23,7 +23,9 @@ const PlantInfo = () => {
         <div className={s.plantUnderline} />
       </div>
       <div className={s.growthWrapper}>
-        <div className={s.progressBar} />
+        <div className={s.progressBar}>
+          <div className={s.progress} style={{width: `${user?.percent}%`}} />
+        </div>
         <p className={s.levelText}>
           레벨 {user?.level} : {user?.percent}%
         </p>

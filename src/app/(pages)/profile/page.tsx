@@ -7,6 +7,7 @@ import {useAtom} from "jotai";
 import {userAtom} from "@/utils/atom/userAtom";
 import { useEffect, useState } from "react";
 import { customAxios } from "@/utils/customAxios";
+import { useRouter } from "next/navigation";
 
 interface Diary {
   id: number;
@@ -15,6 +16,7 @@ interface Diary {
 }
 
 const Profile = () => {
+  const router = useRouter();
   const [user, setUser] = useAtom(userAtom);
   const [diaryList, setDiaryList] = useState<Diary[]>([]);
 
@@ -31,6 +33,18 @@ const Profile = () => {
     })();
   }, []);
 
+  const logoutClick = async () => {
+    const result = confirm("정말로 로그아웃 하시겠습니까?");
+    if (result) {
+      try {
+        await customAxios.delete("/auth");
+        localStorage.clear()
+        router.push("/login");
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
 
   return (
     <div className={s.container}>
@@ -45,7 +59,7 @@ const Profile = () => {
               <p className={s.userName}>{user?.name}</p>
               <p className={s.userLevel}>LV.{user?.level} 새싹 - {user?.percent}%</p>
             </div>
-            <button className={s.userInfoFixBtn}>프로필 수정</button>
+            <button className={s.userInfoFixBtn} onClick={logoutClick}>로그아웃</button>
           </div>
         </div>
         <div className={s.coinContainer}>
