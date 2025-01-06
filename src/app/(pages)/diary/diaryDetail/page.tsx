@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import {useState} from "react";
+import { useState } from "react";
 import * as s from "@/app/(pages)/diary/style.css";
 import LeftArrowIcon from "@/assets/leftArrowIcon";
-import {customAxios} from "@/utils/customAxios";
+import { customAxios } from "@/utils/customAxios";
 
 interface DiaryData {
   id: number;
@@ -13,47 +13,55 @@ interface DiaryData {
   updatedAt: string;
 }
 
-interface DiaryResponse {
-  code: string;
-  message: string;
-  data: DiaryData;
-}
-
 type DiaryWriteProps = {
-  diary: DiaryResponse;  // 부모에서 받은 diary 데이터
-  setIsDiaryRead: (value: boolean) => void;  // 부모에서 받은 상태 변경 함수
+  diary: DiaryData; // 수정된 타입
+  setIsDiaryRead: (value: boolean) => void;
 };
 
-const DiaryDetail = ({diary, setIsDiaryRead}: DiaryWriteProps) => {
-  const [getDiary, setGetDiary] = useState(diary.data)
+const DiaryDetail = ({ diary, setIsDiaryRead }: DiaryWriteProps) => {
+  const [getDiary, setGetDiary] = useState(diary);
 
   const onDiarySubmit = async () => {
     try {
-      // await customAxios.post("/diary", {title: title, content: content})
-      // alert("일기가 등록되었습니다!");
-      // localStorage.setItem("isWrite", "true");
-      // setIsDiaryWrite(false);
-    } catch(err) {
-      alert("일기가 등록되지 않았습니다.")
+      // 수정 요청 코드 추가
+      // await customAxios.put(`/diary/${getDiary.id}`, {
+      //   title: getDiary.title,
+      //   content: getDiary.content,
+      // });
+      // alert("일기가 수정되었습니다!");
+      // setIsDiaryRead(false);
+    } catch (err) {
+      alert("일기가 수정되지 않았습니다.");
     }
-  }
+  };
+
   return (
     <div className={s.diaryWriteContainer}>
-      <div className={s.leftArrow} onClick={() => setIsDiaryRead(false)}><LeftArrowIcon/></div>
+      <div className={s.leftArrow} onClick={() => setIsDiaryRead(false)}>
+        <LeftArrowIcon />
+      </div>
       <div className={s.textsWrapper}>
         <input
           className={s.writeTitle}
           value={getDiary.title}
+          onChange={(e) =>
+            setGetDiary({ ...getDiary, title: e.target.value })
+          }
         />
-        <div className={s.writeDevideLine}/>
+        <div className={s.writeDevideLine} />
         <textarea
           className={s.writeContent}
           value={getDiary.content}
+          onChange={(e) =>
+            setGetDiary({ ...getDiary, content: e.target.value })
+          }
         />
       </div>
-      <button className={s.writeFinishBtn} onClick={onDiarySubmit}>수정하기</button>
+      <button className={s.writeFinishBtn} onClick={onDiarySubmit}>
+        수정하기
+      </button>
     </div>
-  )
-}
+  );
+};
 
 export default DiaryDetail;
