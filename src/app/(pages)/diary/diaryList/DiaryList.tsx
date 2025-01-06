@@ -5,7 +5,7 @@ import DiaryIcon from "@/assets/diary";
 import theme from "@/styles/theme.css";
 import { useEffect, useState } from "react";
 import { customAxios } from "@/utils/customAxios";
-import DiaryDetail from "@/app/(pages)/diary/diaryDetail/page";
+import DiaryDetail from "@/app/(pages)/diary/diaryDetail/DiaryDetail";
 
 interface DiaryData {
   id: number;
@@ -13,12 +13,6 @@ interface DiaryData {
   content: string;
   createdAt: string;
   updatedAt: string;
-}
-
-interface DiaryResponse {
-  code: string;
-  message: string;
-  data: DiaryData;
 }
 
 type DiaryWriteProps = {
@@ -29,7 +23,7 @@ const DiaryList = ({ setIsDiaryWrite }: DiaryWriteProps) => {
   const today = new Date().toISOString().split("T")[0];
   const [diaryList, setDiaryList] = useState<DiaryData[]>([]);
   const [writeBtnState, setWriteBtnState] = useState<boolean>(true);
-  const [selectedDiary, setSelectedDiary] = useState<DiaryResponse | null>(null);
+  const [selectedDiary, setSelectedDiary] = useState<DiaryData | null>(null);
   const [isDiaryRead, setIsDiaryRead] = useState<boolean>(false);
   const [hasTodayDiary, setHasTodayDiary] = useState<boolean | null>(null); // 오늘 일기 여부 저장
 
@@ -78,7 +72,7 @@ const DiaryList = ({ setIsDiaryWrite }: DiaryWriteProps) => {
   const diaryClick = async (id: number) => {
     try {
       const { data } = await customAxios.get(`/diary/${id}`);
-      setSelectedDiary(data);
+      setSelectedDiary(data.data);
       setIsDiaryRead(true);
     } catch (err) {
       console.log(err);

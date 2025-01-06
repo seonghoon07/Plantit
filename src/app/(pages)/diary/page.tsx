@@ -2,8 +2,8 @@
 
 import * as s from "./style.css"
 import {useState} from "react";
-import DiaryWrite from "@/app/(pages)/diary/diaryWrite/page";
-import DiaryList from "@/app/(pages)/diary/diaryList/page";
+import DiaryWrite from "@/app/(pages)/diary/diaryWrite/DiaryWrite";
+import DiaryList from "@/app/(pages)/diary/diaryList/DiaryList";
 
 const Diary = () => {
   const [isDiaryWrite, setIsDiaryWrite] = useState(false);

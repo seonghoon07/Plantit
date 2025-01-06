@@ -13,13 +13,13 @@ interface DiaryData {
   updatedAt: string;
 }
 
-type DiaryWriteProps = {
-  diary: DiaryData; // 수정된 타입
+interface DiaryWriteProps {
+  diary: DiaryData;
   setIsDiaryRead: (value: boolean) => void;
-};
+}
 
 const DiaryDetail = ({ diary, setIsDiaryRead }: DiaryWriteProps) => {
-  const [getDiary, setGetDiary] = useState(diary);
+  const [getDiary, setGetDiary] = useState<DiaryData>(diary);
 
   const onDiarySubmit = async () => {
     try {
