@@ -37,12 +37,12 @@ const Login = () => {
               <p className={s.easyLoginText}>간편 로그인</p>
             <div className={s.devideLine} />
           </div>
-          <div className={s.googleLoginLayout} onClick={handleGoogleLoginClick}>
+          <button className={s.googleLoginLayout} onClick={handleGoogleLoginClick}>
             <Google />
             <div className={s.googleLoginTextLayout}>
               <p className={s.googleLoginText}>구글 로그인</p>
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </div>
